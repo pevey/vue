@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <lp-component></lp-component>
+    <lp-component></lp-component>
+</div>
+<div id="app2">
+    <lp-component></lp-component>
+</div>
+<template id="lp-component-template"><span>Server Status: {{ status }}</span></template>
+
+<script>
+// globally registered
+Vue.component('lp-component', {
+    data: function() {
+        return {
+            status: 'Critical'
+        }
+    },
+    template: '#lp-component-template'
+});
+
+// variable to locally register
+var cmp = {
+    data: function() {
+        return {
+            status: 'Critical'
+        }
+    },
+    template: '#lp-component-template'
+};
+
+new Vue({
+    el: '#app'
+});
+new Vue({
+    el: '#app2',
+    //locally registered component
+    component: {
+        'my-comp': cmp
+    }
+});
+</script>
+
+</body>
+</html>
